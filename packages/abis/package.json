@@ -1,5 +1,5 @@
 {
-    "name": "@sushiswap/subgraph-abis",
+    "name": "@aceswap/subgraph-abis",
     "version": "1.0.0",
     "description": "Abis",
     "license": "MIT",
@@ -16,6 +16,7 @@
         "prepare:kovan": ".",
         "prepare:mainnet": ".",
         "prepare:matic": ".",
+        "prepare:mumbai": ".",
         "prepare:rinkeby": ".",
         "prepare:ropsten": ".",
         "prepare:xdai": "."

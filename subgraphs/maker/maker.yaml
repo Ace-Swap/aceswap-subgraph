@@ -6,11 +6,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: Maker
-    network: mainnet
+    network: matic
     source:
-      address: '0xe11fc0b43ab98eb91e9836129d1ee7c3bc95df50'
+      address: ''
       abi: Pair
-      startBlock: 11626958
+      startBlock: 11333218
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4

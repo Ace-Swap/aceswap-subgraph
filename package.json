@@ -1,5 +1,5 @@
 {
-  "name": "@sushiswap/subgraphs",
+  "name": "@aceswap/subgraphs",
   "private": true,
   "workspaces": [
     "packages/*",
@@ -14,11 +14,13 @@
     "prepare:kovan": "yarn workspaces run prepare:kovan",
     "prepare:mainnet": "yarn workspaces run prepare:mainnet",
     "prepare:matic": "yarn workspaces run prepare:matic",
+    "prepare:mumbai": "yarn workspaces run prepare:mumbai",
     "prepare:rinkeby": "yarn workspaces run prepare:rinkeby",
     "prepare:ropsten": "yarn workspaces run prepare:ropsten",
     "prepare:xdai": "yarn workspaces run prepare:xdai"
   },
   "devDependencies": {
+    "@aceswap/core": "^1.0.7",
     "@graphprotocol/graph-cli": "^0.20.0",
     "@graphprotocol/graph-ts": "^0.20.0",
     "@sushiswap/core": "^1.4.2",

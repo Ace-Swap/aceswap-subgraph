@@ -30,19 +30,19 @@ export const LOCKUP_BLOCK_NUMBER = BigInt.fromI32(10959148)
 
 export const MASTER_CHEF_ADDRESS = Address.fromString('{{ masterchef_address }}')
 
-export const SUSHI_BAR_ADDRESS = Address.fromString('{{ sushi_bar_address }}')
+export const ACE_BAR_ADDRESS = Address.fromString('{{ ace_bar_address }}')
 
-export const SUSHI_MAKER_ADDRESS = Address.fromString('{{ sushi_maker_address }}')
+export const ACE_MAKER_ADDRESS = Address.fromString('{{ ace_maker_address }}')
 
-export const SUSHI_TOKEN_ADDRESS = Address.fromString('{{ sushi_token_address }}')
+export const ACE_TOKEN_ADDRESS = Address.fromString('{{ ace_token_address }}')
 
-export const SUSHI_USDT_PAIR_ADDRESS = Address.fromString('{{ sushi_usdt_pair_address }}')
+export const ACE_USDT_PAIR_ADDRESS = Address.fromString('{{ ace_usdt_pair_address }}')
 
-export const XSUSHI_USDC_PAIR_ADDRESS = Address.fromString('{{ xsushi_usdc_pair_address }}')
+export const XACE_USDC_PAIR_ADDRESS = Address.fromString('{{ xace_usdc_pair_address }}')
 
-export const XSUSHI_WETH_PAIR_ADDRESS = Address.fromString('{{ xsushi_weth_pair_address }}')
+export const XACE_WETH_PAIR_ADDRESS = Address.fromString('{{ xace_weth_pair_address }}')
 
-export const SUSHI_DISTRIBUTOR_ADDRESS = Address.fromString('{{ sushi_distributor_address }}')
+export const ACE_DISTRIBUTOR_ADDRESS = Address.fromString('{{ ace_distributor_address }}')
 
 export const NULL_CALL_RESULT_VALUE = '0x0000000000000000000000000000000000000000000000000000000000000001'
 
@@ -52,7 +52,7 @@ export const DAI_WETH_PAIR = '{{ dai_weth_pair }}'
 
 export const USDT_WETH_PAIR = '{{ usdt_weth_pair }}'
 
-export const SUSHI_USDT_PAIR = '{{ sushi_usdt_pair }}'
+export const ACE_USDT_PAIR = '{{ ace_usdt_pair }}'
 
 // minimum liquidity required to count towards tracked volume for pairs with small # of Lps
 export const MINIMUM_USD_THRESHOLD_NEW_PAIRS = BigDecimal.fromString('0')
@@ -62,21 +62,21 @@ export const MINIMUM_LIQUIDITY_THRESHOLD_ETH = BigDecimal.fromString('5')
 
 export const WETH_ADDRESS = Address.fromString('{{ weth_address }}')
 
-export const SUSHISWAP_WETH_USDT_PAIR_ADDRESS = Address.fromString('{{ sushiswap_weth_usdt_pair_address }}')
+export const ACESWAP_WETH_USDT_PAIR_ADDRESS = Address.fromString('{{ aceswap_weth_usdt_pair_address }}')
 
 export const USDT_ADDRESS = Address.fromString('{{ usdt_address }}')
 
-export const MASTER_CHEF_START_BLOCK = BigInt.fromI32(10750000)
+export const MASTER_CHEF_START_BLOCK = BigInt.fromI32(16526786)
 
-export const UNISWAP_FACTORY_ADDRESS = Address.fromString('{{ uniswap_factory_address }}')
+export const SUSHISWAP_FACTORY_ADDRESS = Address.fromString('{{ sushiswap_factory_address }}')
 
-export const UNISWAP_SUSHI_ETH_PAIR_FIRST_LIQUDITY_BLOCK = BigInt.fromI32(10750005)
+export const SUSHISWAP_ACE_ETH_PAIR_FIRST_LIQUDITY_BLOCK = BigInt.fromI32(16526786)
 
-export const UNISWAP_WETH_USDT_PAIR_ADDRESS = Address.fromString('{{ uniswap_weth_usdt_pair_address }}')
+export const SUSHISWAP_WETH_USDT_PAIR_ADDRESS = Address.fromString('{{ sushiswap_weth_usdt_pair_address }}')
 
-export const UNISWAP_SUSHI_ETH_PAIR_ADDRESS = Address.fromString('{{ uniswap_sushi_eth_pair_address }}')
+export const SUSHISWAP_ACE_ETH_PAIR_ADDRESS = Address.fromString('{{ sushiswap_ace_eth_pair_address }}')
 
-export const UNISWAP_SUSHI_USDT_PAIR_ADDRESS = Address.fromString('{{ uniswap_sushi_usdt_pair_address }}')
+export const SUSHISWAP_ACE_USDT_PAIR_ADDRESS = Address.fromString('{{ sushiswap_ace_usdt_pair_address }}')
 
 
 // Bentobox constants
@@ -108,9 +108,10 @@ export const PAIR_REPAY = 'repay'
 // MiniChef
 export const MINI_CHEF_ADDRESS = Address.fromString('{{ minichef_address }}')
 
-export const ACC_SUSHI_PRECISION = BigInt.fromString('1000000000000')
+export const ACC_ACE_PRECISION = BigInt.fromString('1000000000000')
 
 // Matic Complex Rewarder (note: putting here for now since we don't need to fill in every config file with this address)
-export const MATIC_COMPLEX_REWARDER = Address.fromString('0xa3378ca78633b3b9b2255eaa26748770211163ae')
+// MasterChefV2 contract
+export const MATIC_COMPLEX_REWARDER = Address.fromString('0x0000000000000000000000000000000000000000')
 
 export const WMATIC_ADDRESS = Address.fromString('0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270')

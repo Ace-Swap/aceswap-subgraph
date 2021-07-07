@@ -1,16 +1,16 @@
 specVersion: 0.0.3
 description: Masterchef
-repository: https://github.com/sushiswap/sushiswap-subgraph
+repository: https://github.com/Ace-Swap/aceswap-subgraph
 schema:
   file: ./masterchef.graphql
 dataSources:
   - kind: ethereum/contract
     name: MasterChef
-    network: mainnet
+    network: matic
     source:
-      address: '0xc2edad668740f1aa35e4d8f227fb8e17dca888cd'
+      address: '0xed9a65ed27b69667cde22f1ac834ae0db9632c16'
       abi: MasterChef
-      startBlock: 10736242
+      startBlock: 16526786
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -23,11 +23,11 @@ dataSources:
         - User
       abis:
         - name: MasterChef
-          file: ../../node_modules/@sushiswap/core/build/abi/MasterChef.json
+          file: ../../node_modules/@aceswap/core/abi/MasterChef.json
         - name: Factory
-          file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Factory.json
+          file: ../../node_modules/@aceswap/core/abi/UniswapV2Factory.json
         - name: Pair
-          file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Pair.json
+          file: ../../node_modules/@aceswap/core/abi/UniswapV2Pair.json
         - name: ERC20
           file: ../../node_modules/@sushiswap/core/build/abi/ERC20.json
       eventHandlers:

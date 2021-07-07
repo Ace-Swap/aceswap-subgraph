@@ -14,6 +14,7 @@
     "prepare:kovan": "mustache config/kovan.json index.template.ts > index.ts",
     "prepare:mainnet": "mustache config/mainnet.json index.template.ts > index.ts",
     "prepare:matic": "mustache config/matic.json index.template.ts > index.ts",
+    "prepare:mumbai": "mustache config/mumbai.json index.template.ts > index.ts",
     "prepare:rinkeby": "mustache config/rinkeby.json index.template.ts > index.ts",
     "prepare:ropsten": "mustache config/ropsten.json index.template.ts > index.ts",
     "prepare:xdai": "mustache config/xdai.json index.template.ts > index.ts"

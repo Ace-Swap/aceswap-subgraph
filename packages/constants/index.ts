@@ -24,35 +24,35 @@ export const BIG_INT_ZERO = BigInt.fromI32(0)
 
 export const LOCKUP_POOL_NUMBER = BigInt.fromI32(29)
 
-export const FACTORY_ADDRESS = Address.fromString('0xc0aee478e3658e2610c5f7a4a2e1777ce9e4f2ac')
+export const FACTORY_ADDRESS = Address.fromString('0x47ee213d373f60a0d6a8c58911400ce354406b57')
 
 export const LOCKUP_BLOCK_NUMBER = BigInt.fromI32(10959148)
 
-export const MASTER_CHEF_ADDRESS = Address.fromString('0xc2edad668740f1aa35e4d8f227fb8e17dca888cd')
+export const MASTER_CHEF_ADDRESS = Address.fromString('0xed9a65ed27b69667cde22f1ac834ae0db9632C16')
 
-export const SUSHI_BAR_ADDRESS = Address.fromString('0x8798249c2e607446efb7ad49ec89dd1865ff4272')
+export const ACE_BAR_ADDRESS = Address.fromString('0x0000000000000000000000000000000000000000')
 
-export const SUSHI_MAKER_ADDRESS = Address.fromString('0xe11fc0b43ab98eb91e9836129d1ee7c3bc95df50')
+export const ACE_MAKER_ADDRESS = Address.fromString('0x0000000000000000000000000000000000000000')
 
-export const SUSHI_TOKEN_ADDRESS = Address.fromString('0x6b3595068778dd592e39a122f4f5a5cf09c90fe2')
+export const ACE_TOKEN_ADDRESS = Address.fromString('0x550d07a5c1591331598e4e3a38a8c32d41efc7b7')
 
-export const SUSHI_USDT_PAIR_ADDRESS = Address.fromString('0x680a025da7b1be2c204d7745e809919bce074026')
+export const ACE_USDT_PAIR_ADDRESS = Address.fromString('0x0000000000000000000000000000000000000000')
 
-export const XSUSHI_USDC_PAIR_ADDRESS = Address.fromString('0xd597924b16cc1904d808285bc9044fd51ceeead7')
+export const XACE_USDC_PAIR_ADDRESS = Address.fromString('0x0000000000000000000000000000000000000000')
 
-export const XSUSHI_WETH_PAIR_ADDRESS = Address.fromString('0x36e2fcccc59e5747ff63a03ea2e5c0c2c14911e7')
+export const XACE_WETH_PAIR_ADDRESS = Address.fromString('0x0000000000000000000000000000000000000000')
 
-export const SUSHI_DISTRIBUTOR_ADDRESS = Address.fromString('0xcbe6b83e77cdc011cc18f6f0df8444e5783ed982')
+export const ACE_DISTRIBUTOR_ADDRESS = Address.fromString('0x0000000000000000000000000000000000000000')
 
 export const NULL_CALL_RESULT_VALUE = '0x0000000000000000000000000000000000000000000000000000000000000001'
 
-export const USDC_WETH_PAIR = '0x397ff1542f962076d0bfe58ea045ffa2d347aca0'
+export const USDC_WETH_PAIR = '0xe8c21e0377fbf10546566b04b391d9c66baebc91'
 
-export const DAI_WETH_PAIR = '0xc3d03e4f041fd4cd388c549ee2a29a9e5075882f'
+export const DAI_WETH_PAIR = '0xaedb51016dbee264e456d09008f1e904e26afd2a'
 
-export const USDT_WETH_PAIR = '0x06da0fd433c1a5d7a4faa01111c044910a184553'
+export const USDT_WETH_PAIR = '0x74b9c3bf155a4f4d5925f99057eb4215b536e377'
 
-export const SUSHI_USDT_PAIR = '0x680a025da7b1be2c204d7745e809919bce074026'
+export const ACE_USDT_PAIR = '0x0000000000000000000000000000000000000000'
 
 // minimum liquidity required to count towards tracked volume for pairs with small # of Lps
 export const MINIMUM_USD_THRESHOLD_NEW_PAIRS = BigDecimal.fromString('0')
@@ -60,29 +60,29 @@ export const MINIMUM_USD_THRESHOLD_NEW_PAIRS = BigDecimal.fromString('0')
 // minimum liquidity for price to get tracked
 export const MINIMUM_LIQUIDITY_THRESHOLD_ETH = BigDecimal.fromString('5')
 
-export const WETH_ADDRESS = Address.fromString('0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2')
+export const WETH_ADDRESS = Address.fromString('0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270')
 
-export const SUSHISWAP_WETH_USDT_PAIR_ADDRESS = Address.fromString('0x06da0fd433c1a5d7a4faa01111c044910a184553')
+export const ACESWAP_WETH_USDT_PAIR_ADDRESS = Address.fromString('0x74b9c3bf155a4f4d5925f99057eb4215b536e377')
 
-export const USDT_ADDRESS = Address.fromString('0xdac17f958d2ee523a2206206994597c13d831ec7')
+export const USDT_ADDRESS = Address.fromString('0xc2132d05d31c914a87c6611c10748aeb04b58e8f')
 
-export const MASTER_CHEF_START_BLOCK = BigInt.fromI32(10750000)
+export const MASTER_CHEF_START_BLOCK = BigInt.fromI32(16526786)
 
-export const UNISWAP_FACTORY_ADDRESS = Address.fromString('0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f')
+export const SUSHISWAP_FACTORY_ADDRESS = Address.fromString('0xc35dadb65012ec5796536bd9864ed8773abc74c4')
 
-export const UNISWAP_SUSHI_ETH_PAIR_FIRST_LIQUDITY_BLOCK = BigInt.fromI32(10750005)
+export const SUSHISWAP_ACE_ETH_PAIR_FIRST_LIQUDITY_BLOCK = BigInt.fromI32(16526786)
 
-export const UNISWAP_WETH_USDT_PAIR_ADDRESS = Address.fromString('0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852')
+export const SUSHISWAP_WETH_USDT_PAIR_ADDRESS = Address.fromString('0x55ff76Bffc3cdd9d5fdbbc2ece4528ecce45047e')
 
-export const UNISWAP_SUSHI_ETH_PAIR_ADDRESS = Address.fromString('0xce84867c3c02b05dc570d0135103d3fb9cc19433')
+export const SUSHISWAP_ACE_ETH_PAIR_ADDRESS = Address.fromString('0x0000000000000000000000000000000000000000')
 
-export const UNISWAP_SUSHI_USDT_PAIR_ADDRESS = Address.fromString('0xe3ffab89e53422f468be955e7011932efe80aa26')
+export const SUSHISWAP_ACE_USDT_PAIR_ADDRESS = Address.fromString('0x0000000000000000000000000000000000000000')
 
 
 // Bentobox constants
-export const BENTOBOX_ADDRESS = Address.fromString('0xf5bce5077908a1b7370b9ae04adc565ebd643966')
+export const BENTOBOX_ADDRESS = Address.fromString('0x0000000000000000000000000000000000000000')
 
-export const KASHI_PAIR_MEDIUM_RISK_MASTER_ADDRESS = Address.fromString('0x2cba6ab6574646badc84f0544d05059e57a5dc42')
+export const KASHI_PAIR_MEDIUM_RISK_MASTER_ADDRESS = Address.fromString('0x0000000000000000000000000000000000000000')
 
 export const BENTOBOX_DEPOSIT = 'deposit'
 
@@ -108,9 +108,10 @@ export const PAIR_REPAY = 'repay'
 // MiniChef
 export const MINI_CHEF_ADDRESS = Address.fromString('0x0000000000000000000000000000000000000000')
 
-export const ACC_SUSHI_PRECISION = BigInt.fromString('1000000000000')
+export const ACC_ACE_PRECISION = BigInt.fromString('1000000000000')
 
 // Matic Complex Rewarder (note: putting here for now since we don't need to fill in every config file with this address)
-export const MATIC_COMPLEX_REWARDER = Address.fromString('0xa3378ca78633b3b9b2255eaa26748770211163ae')
+// MasterChefV2 contract
+export const MATIC_COMPLEX_REWARDER = Address.fromString('0x0000000000000000000000000000000000000000')
 
 export const WMATIC_ADDRESS = Address.fromString('0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270')

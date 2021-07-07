@@ -1,6 +1,6 @@
 specVersion: 0.0.3
 description: Exchange
-repository: https://github.com/sushiswap/sushiswap-subgraph
+repository: https://github.com/Ace-Swap/aceswap-subgraph
 schema:
   file: ./exchange.graphql
 dataSources:
@@ -8,9 +8,9 @@ dataSources:
     name: Factory
     network: matic
     source:
-      address: '0xc35dadb65012ec5796536bd9864ed8773abc74c4'
+      address: '0x47ee213d373f60a0d6a8c58911400ce354406b57'
       abi: Factory
-      startBlock: 11333218
+      startBlock: 16568193
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -20,11 +20,11 @@ dataSources:
         - Factory
       abis:
         - name: Factory
-          file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Factory.json
+          file: ../../node_modules/@aceswap/core/abi/UniswapV2Factory.json
         - name: Pair
-          file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Pair.json
-        - name: SushiToken
-          file: ../../node_modules/@sushiswap/core/build/abi/SushiToken.json
+          file: ../../node_modules/@aceswap/core/abi/UniswapV2Pair.json
+        - name: AceToken
+          file: ../../node_modules/@aceswap/core/abi/AceToken.json
         - name: ERC20
           file: ../../node_modules/@sushiswap/core/build/abi/ERC20.json
         - name: ERC20SymbolBytes
@@ -59,9 +59,9 @@ templates:
         - User
       abis:
         - name: Pair
-          file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Pair.json
+          file: ../../node_modules/@aceswap/core/abi/UniswapV2Pair.json
         - name: Factory
-          file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Factory.json
+          file: ../../node_modules/@aceswap/core/abi/UniswapV2Factory.json
       eventHandlers:
         - event: Mint(indexed address,uint256,uint256)
           handler: onMint

@@ -18,6 +18,7 @@
     "prepare:kovan": ".",
     "prepare:mainnet": ".",
     "prepare:matic": ".",
+    "prepare:mumbai": ".",
     "prepare:rinkeby": ".",
     "prepare:ropsten": ".",
     "prepare:xdai": "."

@@ -24,7 +24,7 @@ import {
   MASTER_CHEF_START_BLOCK,
 } from 'const'
 import { History, MasterChef, Pool, PoolHistory, User } from '../generated/schema'
-import { getSushiPrice, getUSDRate } from 'pricing'
+import { getAcePrice, getUSDRate } from 'pricing'
 
 import { ERC20 as ERC20Contract } from '../generated/MasterChef/ERC20'
 import { Pair as PairContract } from '../generated/MasterChef/Pair'
@@ -42,17 +42,17 @@ function getMasterChef(block: ethereum.Block): MasterChef {
     masterChef.owner = contract.owner()
     // poolInfo ...
     masterChef.startBlock = contract.startBlock()
-    masterChef.sushi = contract.sushi()
-    masterChef.sushiPerBlock = contract.sushiPerBlock()
+    masterChef.ace = contract.ace()
+    masterChef.acePerBlock = contract.acePerBlock()
     masterChef.totalAllocPoint = contract.totalAllocPoint()
     // userInfo ...
     masterChef.poolCount = BIG_INT_ZERO
 
-    masterChef.slpBalance = BIG_DECIMAL_ZERO
-    masterChef.slpAge = BIG_DECIMAL_ZERO
-    masterChef.slpAgeRemoved = BIG_DECIMAL_ZERO
-    masterChef.slpDeposited = BIG_DECIMAL_ZERO
-    masterChef.slpWithdrawn = BIG_DECIMAL_ZERO
+    masterChef.alpBalance = BIG_DECIMAL_ZERO
+    masterChef.alpAge = BIG_DECIMAL_ZERO
+    masterChef.alpAgeRemoved = BIG_DECIMAL_ZERO
+    masterChef.alpDeposited = BIG_DECIMAL_ZERO
+    masterChef.alpWithdrawn = BIG_DECIMAL_ZERO
 
     masterChef.updatedAt = block.timestamp
 
@@ -86,17 +86,17 @@ export function getPool(id: BigInt, block: ethereum.Block): Pool {
     pool.pair = poolInfo.value0
     pool.allocPoint = poolInfo.value1
     pool.lastRewardBlock = poolInfo.value2
-    pool.accSushiPerShare = poolInfo.value3
+    pool.accAcePerShare = poolInfo.value3
 
     // Total supply of LP tokens
     pool.balance = BIG_INT_ZERO
     pool.userCount = BIG_INT_ZERO
 
-    pool.slpBalance = BIG_DECIMAL_ZERO
-    pool.slpAge = BIG_DECIMAL_ZERO
-    pool.slpAgeRemoved = BIG_DECIMAL_ZERO
-    pool.slpDeposited = BIG_DECIMAL_ZERO
-    pool.slpWithdrawn = BIG_DECIMAL_ZERO
+    pool.alpBalance = BIG_DECIMAL_ZERO
+    pool.alpAge = BIG_DECIMAL_ZERO
+    pool.alpAgeRemoved = BIG_DECIMAL_ZERO
+    pool.alpDeposited = BIG_DECIMAL_ZERO
+    pool.alpWithdrawn = BIG_DECIMAL_ZERO
 
     pool.timestamp = block.timestamp
     pool.block = block.number
@@ -104,8 +104,8 @@ export function getPool(id: BigInt, block: ethereum.Block): Pool {
     pool.updatedAt = block.timestamp
     pool.entryUSD = BIG_DECIMAL_ZERO
     pool.exitUSD = BIG_DECIMAL_ZERO
-    pool.sushiHarvested = BIG_DECIMAL_ZERO
-    pool.sushiHarvestedUSD = BIG_DECIMAL_ZERO
+    pool.aceHarvested = BIG_DECIMAL_ZERO
+    pool.aceHarvestedUSD = BIG_DECIMAL_ZERO
     pool.save()
   }
 
@@ -122,11 +122,11 @@ function getHistory(owner: string, block: ethereum.Block): History {
   if (history === null) {
     history = new History(id)
     history.owner = owner
-    history.slpBalance = BIG_DECIMAL_ZERO
-    history.slpAge = BIG_DECIMAL_ZERO
-    history.slpAgeRemoved = BIG_DECIMAL_ZERO
-    history.slpDeposited = BIG_DECIMAL_ZERO
-    history.slpWithdrawn = BIG_DECIMAL_ZERO
+    history.alpBalance = BIG_DECIMAL_ZERO
+    history.alpAge = BIG_DECIMAL_ZERO
+    history.alpAgeRemoved = BIG_DECIMAL_ZERO
+    history.alpDeposited = BIG_DECIMAL_ZERO
+    history.alpWithdrawn = BIG_DECIMAL_ZERO
     history.timestamp = block.timestamp
     history.block = block.number
   }
@@ -144,17 +144,17 @@ function getPoolHistory(pool: Pool, block: ethereum.Block): PoolHistory {
   if (history === null) {
     history = new PoolHistory(id)
     history.pool = pool.id
-    history.slpBalance = BIG_DECIMAL_ZERO
-    history.slpAge = BIG_DECIMAL_ZERO
-    history.slpAgeRemoved = BIG_DECIMAL_ZERO
-    history.slpDeposited = BIG_DECIMAL_ZERO
-    history.slpWithdrawn = BIG_DECIMAL_ZERO
+    history.alpBalance = BIG_DECIMAL_ZERO
+    history.alpAge = BIG_DECIMAL_ZERO
+    history.alpAgeRemoved = BIG_DECIMAL_ZERO
+    history.alpDeposited = BIG_DECIMAL_ZERO
+    history.alpWithdrawn = BIG_DECIMAL_ZERO
     history.timestamp = block.timestamp
     history.block = block.number
     history.entryUSD = BIG_DECIMAL_ZERO
     history.exitUSD = BIG_DECIMAL_ZERO
-    history.sushiHarvested = BIG_DECIMAL_ZERO
-    history.sushiHarvestedUSD = BIG_DECIMAL_ZERO
+    history.aceHarvested = BIG_DECIMAL_ZERO
+    history.aceHarvestedUSD = BIG_DECIMAL_ZERO
   }
 
   return history as PoolHistory
@@ -172,8 +172,8 @@ export function getUser(pid: BigInt, address: Address, block: ethereum.Block): U
     user.address = address
     user.amount = BIG_INT_ZERO
     user.rewardDebt = BIG_INT_ZERO
-    user.sushiHarvested = BIG_DECIMAL_ZERO
-    user.sushiHarvestedUSD = BIG_DECIMAL_ZERO
+    user.aceHarvested = BIG_DECIMAL_ZERO
+    user.aceHarvestedUSD = BIG_DECIMAL_ZERO
     user.entryUSD = BIG_DECIMAL_ZERO
     user.exitUSD = BIG_DECIMAL_ZERO
     user.timestamp = block.timestamp
@@ -262,7 +262,7 @@ export function updatePool(call: UpdatePoolCall): void {
   const poolInfo = masterChef.poolInfo(call.inputs._pid)
   const pool = getPool(call.inputs._pid, call.block)
   pool.lastRewardBlock = poolInfo.value2
-  pool.accSushiPerShare = poolInfo.value3
+  pool.accAcePerShare = poolInfo.value3
   pool.save()
 }
 
@@ -287,7 +287,7 @@ export function deposit(event: Deposit): void {
 
   const amount = event.params.amount.divDecimal(BIG_DECIMAL_1E18)
 
-  /*log.info('{} has deposited {} slp tokens to pool #{}', [
+  /*log.info('{} has deposited {} alp tokens to pool #{}', [
     event.params.user.toHex(),
     event.params.amount.toString(),
     event.params.pid.toString(),
@@ -305,13 +305,13 @@ export function deposit(event: Deposit): void {
   pool.balance = pairContract.balanceOf(MASTER_CHEF_ADDRESS)
 
   pool.lastRewardBlock = poolInfo.value2
-  pool.accSushiPerShare = poolInfo.value3
+  pool.accAcePerShare = poolInfo.value3
 
   const poolDays = event.block.timestamp.minus(pool.updatedAt).divDecimal(BigDecimal.fromString('86400'))
-  pool.slpAge = pool.slpAge.plus(poolDays.times(pool.slpBalance))
+  pool.alpAge = pool.alpAge.plus(poolDays.times(pool.alpBalance))
 
-  pool.slpDeposited = pool.slpDeposited.plus(amount)
-  pool.slpBalance = pool.slpBalance.plus(amount)
+  pool.alpDeposited = pool.alpDeposited.plus(amount)
+  pool.alpBalance = pool.alpBalance.plus(amount)
 
   pool.updatedAt = event.block.timestamp
 
@@ -319,30 +319,30 @@ export function deposit(event: Deposit): void {
 
   const user = getUser(event.params.pid, event.params.user, event.block)
 
-  // If not currently in pool and depositing SLP
+  // If not currently in pool and depositing ALP
   if (!user.pool && event.params.amount.gt(BIG_INT_ZERO)) {
     user.pool = pool.id
     pool.userCount = pool.userCount.plus(BIG_INT_ONE)
   }
 
-  // Calculate SUSHI being paid out
+  // Calculate ACE being paid out
   if (event.block.number.gt(MASTER_CHEF_START_BLOCK) && user.amount.gt(BIG_INT_ZERO)) {
     const pending = user.amount
       .toBigDecimal()
-      .times(pool.accSushiPerShare.toBigDecimal())
+      .times(pool.accAcePerShare.toBigDecimal())
       .div(BIG_DECIMAL_1E12)
       .minus(user.rewardDebt.toBigDecimal())
       .div(BIG_DECIMAL_1E18)
-    // log.info('Deposit: User amount is more than zero, we should harvest {} sushi', [pending.toString()])
+    // log.info('Deposit: User amount is more than zero, we should harvest {} ace', [pending.toString()])
     if (pending.gt(BIG_DECIMAL_ZERO)) {
-      // log.info('Harvesting {} SUSHI', [pending.toString()])
-      const sushiHarvestedUSD = pending.times(getSushiPrice(event.block))
-      user.sushiHarvested = user.sushiHarvested.plus(pending)
-      user.sushiHarvestedUSD = user.sushiHarvestedUSD.plus(sushiHarvestedUSD)
-      pool.sushiHarvested = pool.sushiHarvested.plus(pending)
-      pool.sushiHarvestedUSD = pool.sushiHarvestedUSD.plus(sushiHarvestedUSD)
-      poolHistory.sushiHarvested = pool.sushiHarvested
-      poolHistory.sushiHarvestedUSD = pool.sushiHarvestedUSD
+      // log.info('Harvesting {} ACE', [pending.toString()])
+      const aceHarvestedUSD = pending.times(getAcePrice(event.block))
+      user.aceHarvested = user.aceHarvested.plus(pending)
+      user.aceHarvestedUSD = user.aceHarvestedUSD.plus(aceHarvestedUSD)
+      pool.aceHarvested = pool.aceHarvested.plus(pending)
+      pool.aceHarvestedUSD = pool.aceHarvestedUSD.plus(aceHarvestedUSD)
+      poolHistory.aceHarvested = pool.aceHarvested
+      poolHistory.aceHarvestedUSD = pool.aceHarvestedUSD
     }
   }
 
@@ -371,7 +371,7 @@ export function deposit(event: Deposit): void {
       const entryUSD = token0USD.plus(token1USD)
 
       // log.info(
-      //   'Token {} priceUSD: {} reserve: {} amount: {} / Token {} priceUSD: {} reserve: {} amount: {} - slp amount: {} total supply: {} share: {}',
+      //   'Token {} priceUSD: {} reserve: {} amount: {} / Token {} priceUSD: {} reserve: {} amount: {} - alp amount: {} total supply: {} share: {}',
       //   [
       //     token0.symbol(),
       //     token0PriceUSD.toString(),
@@ -387,7 +387,7 @@ export function deposit(event: Deposit): void {
       //   ]
       // )
 
-      // log.info('User {} has deposited {} SLP tokens {} {} (${}) and {} {} (${}) at a combined value of ${}', [
+      // log.info('User {} has deposited {} ALP tokens {} {} (${}) and {} {} (${}) at a combined value of ${}', [
       //   user.address.toHex(),
       //   amount.toString(),
       //   token0Amount.toString(),
@@ -413,23 +413,23 @@ export function deposit(event: Deposit): void {
   const masterChef = getMasterChef(event.block)
 
   const masterChefDays = event.block.timestamp.minus(masterChef.updatedAt).divDecimal(BigDecimal.fromString('86400'))
-  masterChef.slpAge = masterChef.slpAge.plus(masterChefDays.times(masterChef.slpBalance))
+  masterChef.alpAge = masterChef.alpAge.plus(masterChefDays.times(masterChef.alpBalance))
 
-  masterChef.slpDeposited = masterChef.slpDeposited.plus(amount)
-  masterChef.slpBalance = masterChef.slpBalance.plus(amount)
+  masterChef.alpDeposited = masterChef.alpDeposited.plus(amount)
+  masterChef.alpBalance = masterChef.alpBalance.plus(amount)
 
   masterChef.updatedAt = event.block.timestamp
   masterChef.save()
 
   const history = getHistory(MASTER_CHEF_ADDRESS.toHex(), event.block)
-  history.slpAge = masterChef.slpAge
-  history.slpBalance = masterChef.slpBalance
-  history.slpDeposited = history.slpDeposited.plus(amount)
+  history.alpAge = masterChef.alpAge
+  history.alpBalance = masterChef.alpBalance
+  history.alpDeposited = history.alpDeposited.plus(amount)
   history.save()
 
-  poolHistory.slpAge = pool.slpAge
-  poolHistory.slpBalance = pool.balance.divDecimal(BIG_DECIMAL_1E18)
-  poolHistory.slpDeposited = poolHistory.slpDeposited.plus(amount)
+  poolHistory.alpAge = pool.alpAge
+  poolHistory.alpBalance = pool.balance.divDecimal(BIG_DECIMAL_1E18)
+  poolHistory.alpDeposited = poolHistory.alpDeposited.plus(amount)
   poolHistory.userCount = pool.userCount
   poolHistory.save()
 }
@@ -444,7 +444,7 @@ export function withdraw(event: Withdraw): void {
 
   const amount = event.params.amount.divDecimal(BIG_DECIMAL_1E18)
 
-  // log.info('{} has withdrawn {} slp tokens from pool #{}', [
+  // log.info('{} has withdrawn {} alp tokens from pool #{}', [
   //   event.params.user.toHex(),
   //   amount.toString(),
   //   event.params.pid.toString(),
@@ -461,15 +461,15 @@ export function withdraw(event: Withdraw): void {
   const pairContract = PairContract.bind(poolInfo.value0)
   pool.balance = pairContract.balanceOf(MASTER_CHEF_ADDRESS)
   pool.lastRewardBlock = poolInfo.value2
-  pool.accSushiPerShare = poolInfo.value3
+  pool.accAcePerShare = poolInfo.value3
 
   const poolDays = event.block.timestamp.minus(pool.updatedAt).divDecimal(BigDecimal.fromString('86400'))
-  const poolAge = pool.slpAge.plus(poolDays.times(pool.slpBalance))
-  const poolAgeRemoved = poolAge.div(pool.slpBalance).times(amount)
-  pool.slpAge = poolAge.minus(poolAgeRemoved)
-  pool.slpAgeRemoved = pool.slpAgeRemoved.plus(poolAgeRemoved)
-  pool.slpWithdrawn = pool.slpWithdrawn.plus(amount)
-  pool.slpBalance = pool.slpBalance.minus(amount)
+  const poolAge = pool.alpAge.plus(poolDays.times(pool.alpBalance))
+  const poolAgeRemoved = poolAge.div(pool.alpBalance).times(amount)
+  pool.alpAge = poolAge.minus(poolAgeRemoved)
+  pool.alpAgeRemoved = pool.alpAgeRemoved.plus(poolAgeRemoved)
+  pool.alpWithdrawn = pool.alpWithdrawn.plus(amount)
+  pool.alpBalance = pool.alpBalance.minus(amount)
   pool.updatedAt = event.block.timestamp
 
   const user = getUser(event.params.pid, event.params.user, event.block)
@@ -477,27 +477,27 @@ export function withdraw(event: Withdraw): void {
   if (event.block.number.gt(MASTER_CHEF_START_BLOCK) && user.amount.gt(BIG_INT_ZERO)) {
     const pending = user.amount
       .toBigDecimal()
-      .times(pool.accSushiPerShare.toBigDecimal())
+      .times(pool.accAcePerShare.toBigDecimal())
       .div(BIG_DECIMAL_1E12)
       .minus(user.rewardDebt.toBigDecimal())
       .div(BIG_DECIMAL_1E18)
-    // log.info('Withdraw: User amount is more than zero, we should harvest {} sushi - block: {}', [
+    // log.info('Withdraw: User amount is more than zero, we should harvest {} ace - block: {}', [
     //   pending.toString(),
     //   event.block.number.toString(),
     // ])
-    // log.info('SUSHI PRICE {}', [getSushiPrice(event.block).toString()])
+    // log.info('ACE PRICE {}', [getAcePrice(event.block).toString()])
     if (pending.gt(BIG_DECIMAL_ZERO)) {
-      // log.info('Harvesting {} SUSHI (CURRENT SUSHI PRICE {})', [
+      // log.info('Harvesting {} ACE (CURRENT ACE PRICE {})', [
       //   pending.toString(),
-      //   getSushiPrice(event.block).toString(),
+      //   getAcePrice(event.block).toString(),
       // ])
-      const sushiHarvestedUSD = pending.times(getSushiPrice(event.block))
-      user.sushiHarvested = user.sushiHarvested.plus(pending)
-      user.sushiHarvestedUSD = user.sushiHarvestedUSD.plus(sushiHarvestedUSD)
-      pool.sushiHarvested = pool.sushiHarvested.plus(pending)
-      pool.sushiHarvestedUSD = pool.sushiHarvestedUSD.plus(sushiHarvestedUSD)
-      poolHistory.sushiHarvested = pool.sushiHarvested
-      poolHistory.sushiHarvestedUSD = pool.sushiHarvestedUSD
+      const aceHarvestedUSD = pending.times(getAcePrice(event.block))
+      user.aceHarvested = user.aceHarvested.plus(pending)
+      user.aceHarvestedUSD = user.aceHarvestedUSD.plus(aceHarvestedUSD)
+      pool.aceHarvested = pool.aceHarvested.plus(pending)
+      pool.aceHarvestedUSD = pool.aceHarvestedUSD.plus(aceHarvestedUSD)
+      poolHistory.aceHarvested = pool.aceHarvested
+      poolHistory.aceHarvestedUSD = pool.aceHarvestedUSD
     }
   }
 
@@ -532,7 +532,7 @@ export function withdraw(event: Withdraw): void {
 
       poolHistory.exitUSD = pool.exitUSD
 
-      // log.info('User {} has withdrwn {} SLP tokens {} {} (${}) and {} {} (${}) at a combined value of ${}', [
+      // log.info('User {} has withdrwn {} ALP tokens {} {} (${}) and {} {} (${}) at a combined value of ${}', [
       //   user.address.toHex(),
       //   amount.toString(),
       //   token0Amount.toString(),
@@ -550,7 +550,7 @@ export function withdraw(event: Withdraw): void {
     }
   }
 
-  // If SLP amount equals zero, remove from pool and reduce userCount
+  // If ALP amount equals zero, remove from pool and reduce userCount
   if (user.amount.equals(BIG_INT_ZERO)) {
     user.pool = null
     pool.userCount = pool.userCount.minus(BIG_INT_ONE)
@@ -562,27 +562,27 @@ export function withdraw(event: Withdraw): void {
   const masterChef = getMasterChef(event.block)
 
   const days = event.block.timestamp.minus(masterChef.updatedAt).divDecimal(BigDecimal.fromString('86400'))
-  const slpAge = masterChef.slpAge.plus(days.times(masterChef.slpBalance))
-  const slpAgeRemoved = slpAge.div(masterChef.slpBalance).times(amount)
-  masterChef.slpAge = slpAge.minus(slpAgeRemoved)
-  masterChef.slpAgeRemoved = masterChef.slpAgeRemoved.plus(slpAgeRemoved)
+  const alpAge = masterChef.alpAge.plus(days.times(masterChef.alpBalance))
+  const alpAgeRemoved = alpAge.div(masterChef.alpBalance).times(amount)
+  masterChef.alpAge = alpAge.minus(alpAgeRemoved)
+  masterChef.alpAgeRemoved = masterChef.alpAgeRemoved.plus(alpAgeRemoved)
 
-  masterChef.slpWithdrawn = masterChef.slpWithdrawn.plus(amount)
-  masterChef.slpBalance = masterChef.slpBalance.minus(amount)
+  masterChef.alpWithdrawn = masterChef.alpWithdrawn.plus(amount)
+  masterChef.alpBalance = masterChef.alpBalance.minus(amount)
   masterChef.updatedAt = event.block.timestamp
   masterChef.save()
 
   const history = getHistory(MASTER_CHEF_ADDRESS.toHex(), event.block)
-  history.slpAge = masterChef.slpAge
-  history.slpAgeRemoved = history.slpAgeRemoved.plus(slpAgeRemoved)
-  history.slpBalance = masterChef.slpBalance
-  history.slpWithdrawn = history.slpWithdrawn.plus(amount)
+  history.alpAge = masterChef.alpAge
+  history.alpAgeRemoved = history.alpAgeRemoved.plus(alpAgeRemoved)
+  history.alpBalance = masterChef.alpBalance
+  history.alpWithdrawn = history.alpWithdrawn.plus(amount)
   history.save()
 
-  poolHistory.slpAge = pool.slpAge
-  poolHistory.slpAgeRemoved = poolHistory.slpAgeRemoved.plus(slpAgeRemoved)
-  poolHistory.slpBalance = pool.balance.divDecimal(BIG_DECIMAL_1E18)
-  poolHistory.slpWithdrawn = poolHistory.slpWithdrawn.plus(amount)
+  poolHistory.alpAge = pool.alpAge
+  poolHistory.alpAgeRemoved = poolHistory.alpAgeRemoved.plus(alpAgeRemoved)
+  poolHistory.alpBalance = pool.balance.divDecimal(BIG_DECIMAL_1E18)
+  poolHistory.alpWithdrawn = poolHistory.alpWithdrawn.plus(amount)
   poolHistory.userCount = pool.userCount
   poolHistory.save()
 }
